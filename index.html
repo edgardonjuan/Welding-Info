@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -34,11 +34,26 @@
       }
 
       body {
-        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
           sans-serif;
-        background: radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.09), transparent 50%),
-          radial-gradient(circle at 90% 0%, rgba(14, 165, 233, 0.18), transparent 45%),
-          linear-gradient(160deg, rgba(8, 47, 73, 0.6), transparent 65%), var(--bg);
+        background:
+          radial-gradient(
+            circle at 10% 10%,
+            rgba(56, 189, 248, 0.09),
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 90% 0%,
+            rgba(14, 165, 233, 0.18),
+            transparent 45%
+          ),
+          linear-gradient(160deg, rgba(8, 47, 73, 0.6), transparent 65%),
+          var(--bg);
         color: var(--text);
         min-height: 100vh;
       }
@@ -140,7 +155,9 @@
         padding: 1.75rem;
         border: 1px solid var(--card-border);
         box-shadow: var(--shadow);
-        transition: border 0.2s ease, transform 0.2s ease;
+        transition:
+          border 0.2s ease,
+          transform 0.2s ease;
       }
 
       .card:hover {
@@ -172,15 +189,19 @@
       }
 
       .tracker-item {
+        position: relative;
         display: grid;
         grid-template-columns: auto 1fr auto;
         gap: 1rem;
-        align-items: center;
+        align-items: flex-start;
         padding: 1rem 1.25rem;
+        padding-right: 3rem;
         border-radius: 18px;
         background: rgba(15, 23, 42, 0.9);
         border: 1px solid rgba(148, 163, 184, 0.14);
-        transition: border 0.2s ease, box-shadow 0.2s ease;
+        transition:
+          border 0.2s ease,
+          box-shadow 0.2s ease;
       }
 
       .tracker-item[data-state="done"] {
@@ -188,14 +209,36 @@
         box-shadow: 0 16px 32px -20px rgba(56, 189, 248, 0.45);
       }
 
-      .tracker-item h3 {
+      .tracker-content {
+        display: grid;
+        gap: 0.35rem;
+      }
+
+      .tracker-content h3 {
         font-size: 1rem;
         font-weight: 600;
       }
 
-      .tracker-item p {
+      .tracker-content p {
         color: var(--text-muted);
         font-size: 0.9rem;
+      }
+
+      .tracker-item .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+      }
+
+      .tracker-item .tag {
+        padding: 0.25rem 0.65rem;
+        border-radius: 999px;
+        background: rgba(56, 189, 248, 0.16);
+        color: var(--accent);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
       }
 
       .badge {
@@ -209,6 +252,33 @@
         font-weight: 600;
       }
 
+      .remove-item {
+        position: absolute;
+        top: 0.65rem;
+        right: 0.65rem;
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        border-radius: 999px;
+        color: var(--text-subtle);
+        width: 28px;
+        height: 28px;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        transition:
+          color 0.2s ease,
+          border 0.2s ease,
+          background 0.2s ease;
+      }
+
+      .remove-item:hover,
+      .remove-item:focus {
+        color: var(--text);
+        border-color: var(--accent-strong);
+        background: rgba(56, 189, 248, 0.14);
+        outline: none;
+      }
+
       .toggle {
         --size: 22px;
         appearance: none;
@@ -219,7 +289,9 @@
         border: 1px solid rgba(148, 163, 184, 0.45);
         position: relative;
         cursor: pointer;
-        transition: background 0.2s ease, border 0.2s ease;
+        transition:
+          background 0.2s ease,
+          border 0.2s ease;
       }
 
       .toggle::after {
@@ -232,7 +304,9 @@
         aspect-ratio: 1;
         border-radius: 50%;
         background: var(--text-subtle);
-        transition: transform 0.2s ease, background 0.2s ease;
+        transition:
+          transform 0.2s ease,
+          background 0.2s ease;
         box-shadow: 0 3px 12px rgba(15, 23, 42, 0.45);
       }
 
@@ -246,6 +320,98 @@
         background: var(--accent);
       }
 
+      .resource-link {
+        color: inherit;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+
+      .resource-link span {
+        font-size: 0.85rem;
+        color: var(--accent);
+      }
+
+      .form-card {
+        display: grid;
+        gap: 1.2rem;
+      }
+
+      .field {
+        display: grid;
+        gap: 0.4rem;
+      }
+
+      .field label {
+        font-size: 0.8rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-subtle);
+        font-weight: 600;
+      }
+
+      .field input,
+      .field select,
+      .field textarea {
+        background: rgba(15, 23, 42, 0.7);
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        border-radius: 12px;
+        padding: 0.65rem 0.85rem;
+        color: var(--text);
+        font: inherit;
+        resize: none;
+      }
+
+      .field textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+
+      .field input:focus,
+      .field select:focus,
+      .field textarea:focus {
+        outline: none;
+        border-color: var(--accent-strong);
+        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+      }
+
+      .field small {
+        color: var(--text-muted);
+        font-size: 0.75rem;
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .link-button {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        font: inherit;
+        text-decoration: underline;
+        cursor: pointer;
+        padding: 0;
+        align-self: flex-start;
+      }
+
+      .link-button:hover,
+      .link-button:focus {
+        color: var(--text);
+        outline: none;
+      }
+
+      .custom-reading-list {
+        list-style: none;
+        display: grid;
+        gap: 0.35rem;
+        color: var(--text-subtle);
+        font-size: 0.85rem;
+      }
+
       .progress-bar {
         width: 100%;
         height: 8px;
@@ -257,7 +423,11 @@
       .progress-bar span {
         display: block;
         height: 100%;
-        background: linear-gradient(90deg, rgba(56, 189, 248, 0.2), rgba(56, 189, 248, 0.75));
+        background: linear-gradient(
+          90deg,
+          rgba(56, 189, 248, 0.2),
+          rgba(56, 189, 248, 0.75)
+        );
         transform-origin: left;
       }
 
@@ -289,7 +459,9 @@
         color: var(--bg);
         background: linear-gradient(135deg, #22d3ee, #38bdf8 55%, #2563eb);
         cursor: pointer;
-        transition: transform 0.2s ease, filter 0.2s ease;
+        transition:
+          transform 0.2s ease,
+          filter 0.2s ease;
       }
 
       .notes-card button:hover,
@@ -328,35 +500,6 @@
         color: var(--text-muted);
         font-size: 0.85rem;
         text-align: center;
-      }
-
-      .pill-menu {
-        display: flex;
-        gap: 0.75rem;
-        flex-wrap: wrap;
-      }
-
-      .pill-menu button {
-        border-radius: 999px;
-        border: 1px solid transparent;
-        background: rgba(148, 163, 184, 0.08);
-        color: var(--text-subtle);
-        font-size: 0.85rem;
-        font-weight: 600;
-        padding: 0.55rem 1.05rem;
-        cursor: pointer;
-        transition: all 0.2s ease;
-      }
-
-      .pill-menu button.active {
-        background: rgba(56, 189, 248, 0.18);
-        color: var(--text);
-        border-color: rgba(56, 189, 248, 0.45);
-      }
-
-      .pill-menu button:hover {
-        color: var(--text);
-        border-color: rgba(56, 189, 248, 0.35);
       }
 
       .flex-between {
@@ -440,7 +583,9 @@
       <div class="wrapper top-bar">
         <div>
           <div class="title">Welding Practice & Study Tracker</div>
-          <p class="subtle">Stay accountable across reading, practice reps, and personal notes.</p>
+          <p class="subtle">
+            Stay accountable across reading, practice reps, and personal notes.
+          </p>
         </div>
         <nav aria-label="Section navigation">
           <a href="#overview">Overview</a>
@@ -456,37 +601,67 @@
         <div class="progress-summary card">
           <div class="progress-ring" aria-hidden="true">
             <svg width="140" height="140" viewBox="0 0 120 120">
-              <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(148,163,184,0.2)" stroke-width="8"></circle>
-              <circle cx="60" cy="60" r="52" fill="none" stroke="var(--accent)" stroke-linecap="round" stroke-width="8" stroke-dasharray="327" stroke-dashoffset="327"></circle>
+              <circle
+                cx="60"
+                cy="60"
+                r="52"
+                fill="none"
+                stroke="rgba(148,163,184,0.2)"
+                stroke-width="8"
+              ></circle>
+              <circle
+                cx="60"
+                cy="60"
+                r="52"
+                fill="none"
+                stroke="var(--accent)"
+                stroke-linecap="round"
+                stroke-width="8"
+                stroke-dasharray="327"
+                stroke-dashoffset="327"
+              ></circle>
             </svg>
             <span id="overall-percentage">0%</span>
           </div>
           <div>
             <h2>Weekly Momentum</h2>
             <p class="lead">
-              Toggle each reading or practice block as you complete it. The tracker stores your progress locally so you can come
-              back later and pick up right where you left off.
+              Toggle each reading or practice block as you complete it. The
+              tracker stores your progress locally so you can come back later
+              and pick up right where you left off.
             </p>
             <div class="cards three" style="margin-top: 1.5rem">
               <div class="card" style="padding: 1.1rem 1.3rem">
                 <div class="subtle">Reading Complete</div>
                 <div class="flex-between" style="margin-top: 0.6rem">
-                  <strong id="reading-count" style="font-size: 1.8rem">0%</strong>
-                  <div class="progress-bar" style="flex: 1; margin-left: 1rem"><span id="reading-bar" style="width: 0%"></span></div>
+                  <strong id="reading-count" style="font-size: 1.8rem"
+                    >0%</strong
+                  >
+                  <div class="progress-bar" style="flex: 1; margin-left: 1rem">
+                    <span id="reading-bar" style="width: 0%"></span>
+                  </div>
                 </div>
               </div>
               <div class="card" style="padding: 1.1rem 1.3rem">
                 <div class="subtle">Practice Complete</div>
                 <div class="flex-between" style="margin-top: 0.6rem">
-                  <strong id="practice-count" style="font-size: 1.8rem">0%</strong>
-                  <div class="progress-bar" style="flex: 1; margin-left: 1rem"><span id="practice-bar" style="width: 0%"></span></div>
+                  <strong id="practice-count" style="font-size: 1.8rem"
+                    >0%</strong
+                  >
+                  <div class="progress-bar" style="flex: 1; margin-left: 1rem">
+                    <span id="practice-bar" style="width: 0%"></span>
+                  </div>
                 </div>
               </div>
               <div class="card" style="padding: 1.1rem 1.3rem">
                 <div class="subtle">Streak</div>
                 <div style="margin-top: 0.6rem">
-                  <strong id="streak-count" style="font-size: 1.8rem">0 days</strong>
-                  <p class="subtle" style="margin-top: 0.35rem">Longest streak saved locally.</p>
+                  <strong id="streak-count" style="font-size: 1.8rem"
+                    >0 days</strong
+                  >
+                  <p class="subtle" style="margin-top: 0.35rem">
+                    Longest streak saved locally.
+                  </p>
                 </div>
               </div>
             </div>
@@ -497,25 +672,109 @@
       <section id="reading">
         <div class="flex-between">
           <h2>Reading Checklist</h2>
-          <div class="pill-menu" role="group" aria-label="Quick filters">
-            <button data-filter="all" class="active">All</button>
-            <button data-filter="theory">Theory</button>
-            <button data-filter="safety">Safety</button>
-            <button data-filter="process">Process</button>
-          </div>
+          <p class="subtle">
+            Link new lessons, diagrams, or quizzes as you find them.
+          </p>
         </div>
         <div class="cards two">
           <div class="card">
             <div class="tracker-list" id="reading-list"></div>
-            <p class="empty-message" hidden>No readings match that filter yet.</p>
-          </div>
-          <div class="card">
-            <h3 style="font-size: 1.1rem; font-weight: 700">How to use this list</h3>
-            <p class="subtle" style="margin-top: 0.5rem">
-              Each item links to a primer or video. Tap the toggle once you've finished it. Completed readings stay synced in this
-              browser via local storage.
+            <p class="empty-message" hidden>
+              No readings match that filter yet.
             </p>
-            <button class="primary" style="margin-top: 1.5rem" data-action="reset-readings">Reset Reading Progress</button>
+          </div>
+          <div class="card form-card">
+            <div>
+              <h3 style="font-size: 1.1rem; font-weight: 700">
+                Personalize your plan
+              </h3>
+              <p class="subtle" style="margin-top: 0.5rem">
+                Save any article or video you like. We'll keep progress and
+                links stored locally for you.
+              </p>
+            </div>
+            <div class="field">
+              <label for="reading-filter">Filter by topic</label>
+              <select
+                id="reading-filter"
+                aria-label="Filter reading list by topic"
+              >
+                <option value="all">Show everything</option>
+              </select>
+            </div>
+            <form id="add-reading-form" class="custom-reading-form">
+              <div class="field">
+                <label for="reading-title">Title</label>
+                <input
+                  id="reading-title"
+                  name="title"
+                  type="text"
+                  required
+                  placeholder="e.g. GTAW Aluminum Settings"
+                />
+              </div>
+              <div class="field">
+                <label for="reading-link">Link</label>
+                <input
+                  id="reading-link"
+                  name="link"
+                  type="url"
+                  required
+                  placeholder="https://example.com/your-resource"
+                />
+                <small
+                  >We'll open new links in a separate tab so you don't lose your
+                  tracker.</small
+                >
+              </div>
+              <div class="field">
+                <label for="reading-description">What you'll cover</label>
+                <textarea
+                  id="reading-description"
+                  name="description"
+                  rows="3"
+                  placeholder="Short note about the diagrams, safety tips, or quiz you'll study"
+                ></textarea>
+              </div>
+              <div class="field">
+                <label for="reading-category">Topic tag</label>
+                <input
+                  id="reading-category"
+                  name="category"
+                  type="text"
+                  placeholder="e.g. safety, symbols, process"
+                />
+              </div>
+              <button class="primary" type="submit">
+                Add to reading checklist
+              </button>
+            </form>
+            <div id="custom-reading-summary" hidden>
+              <h4 style="font-size: 0.95rem; font-weight: 600">
+                Your custom lessons
+              </h4>
+              <ul class="custom-reading-list" id="custom-reading-list"></ul>
+              <small class="subtle"
+                >Use the × button beside any item to remove it from the
+                tracker.</small
+              >
+            </div>
+            <div class="form-actions">
+              <button
+                class="primary"
+                type="button"
+                data-action="reset-readings"
+              >
+                Reset Reading Progress
+              </button>
+              <button
+                class="link-button"
+                type="button"
+                data-action="clear-custom-readings"
+              >
+                Remove custom readings
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -523,16 +782,25 @@
       <section id="practice">
         <div class="flex-between">
           <h2>Practice Sessions</h2>
-          <div class="subtle">Tip: add a reflection note after each session to build habits.</div>
+          <div class="subtle">
+            Tip: add a reflection note after each session to build habits.
+          </div>
         </div>
         <div class="cards two">
           <div class="card">
             <div class="tracker-list" id="practice-list"></div>
           </div>
           <div class="card notes-card" id="notes">
-            <h3 style="font-size: 1.1rem; font-weight: 700">Reflection Notes</h3>
-            <p class="subtle" style="margin-top: 0.5rem">What went well? What needs attention next time?</p>
-            <textarea id="notes-field" placeholder="Record key learnings, machines used, fit-up issues, etc."></textarea>
+            <h3 style="font-size: 1.1rem; font-weight: 700">
+              Reflection Notes
+            </h3>
+            <p class="subtle" style="margin-top: 0.5rem">
+              What went well? What needs attention next time?
+            </p>
+            <textarea
+              id="notes-field"
+              placeholder="Record key learnings, machines used, fit-up issues, etc."
+            ></textarea>
             <div class="actions">
               <button class="secondary" data-action="clear-notes">Clear</button>
               <button data-action="save-notes">Save Note</button>
@@ -543,19 +811,28 @@
     </main>
 
     <footer>
-      Built for the self-paced welder: use the tracker weekly to keep your practice intentional.
+      Built for the self-paced welder: use the tracker weekly to keep your
+      practice intentional.
     </footer>
 
     <template id="tracker-item-template">
-      <label class="tracker-item">
+      <div class="tracker-item" data-state="pending">
         <input class="toggle" type="checkbox" />
-        <span>
+        <div class="tracker-content">
           <h3></h3>
           <p></p>
           <div class="tags" hidden></div>
-        </span>
+        </div>
         <span class="badge"></span>
-      </label>
+        <button
+          class="remove-item"
+          type="button"
+          hidden
+          aria-label="Remove custom item"
+        >
+          ×
+        </button>
+      </div>
     </template>
 
     <script>
@@ -564,7 +841,8 @@
           {
             id: "mig-basics",
             title: "Intro to MIG Welding Parameters",
-            description: "Voltage, wire feed speed, contact tip to work distance",
+            description:
+              "Voltage, wire feed speed, contact tip to work distance",
             category: "process",
             link: "https://weldingtipsandtricks.com/mig-welding-basics.html",
             type: "Article",
@@ -582,7 +860,8 @@
           {
             id: "joint-prep",
             title: "Preparing Joints for Strong Welds",
-            description: "Cleaning, bevels, root gap, and fit-up for mild steel",
+            description:
+              "Cleaning, bevels, root gap, and fit-up for mild steel",
             category: "process",
             link: "https://www.millerwelds.com/resource/articles/welding-joint-preparation",
             type: "Article",
@@ -591,7 +870,8 @@
           {
             id: "metallurgy",
             title: "Metallurgy Basics for Fabrication",
-            description: "How heat-affected zones behave and why cooling matters",
+            description:
+              "How heat-affected zones behave and why cooling matters",
             category: "theory",
             link: "https://materials.openstax.org/books/introduction-to-materials-science",
             type: "Chapter",
@@ -600,7 +880,8 @@
           {
             id: "symbols",
             title: "Reading Welding Symbols",
-            description: "Blueprint interpretation essentials for fabrication drawings",
+            description:
+              "Blueprint interpretation essentials for fabrication drawings",
             category: "theory",
             link: "https://www.thefabricator.com/thefabricator/article/shopmanagement/welding-symbols-demystified",
             type: "Article",
@@ -609,7 +890,8 @@
           {
             id: "safety-ventilation",
             title: "Ventilation & Fume Safety",
-            description: "Airflow strategies and respirator selection for indoor bays",
+            description:
+              "Airflow strategies and respirator selection for indoor bays",
             category: "safety",
             link: "https://www.osha.gov/sites/default/files/publications/welding.pdf",
             type: "PDF",
@@ -620,13 +902,15 @@
           {
             id: "pads-of-beads",
             title: "Pads of Beads",
-            description: "Run five steady beads focusing on travel speed and gun angle.",
+            description:
+              "Run five steady beads focusing on travel speed and gun angle.",
             focus: "Fundamentals",
           },
           {
             id: "lap-joint",
             title: "Lap Joint Fillets",
-            description: "Three 3\" coupons, horizontal position, evaluate for undercut.",
+            description:
+              'Three 3" coupons, horizontal position, evaluate for undercut.',
             focus: "Positioning",
           },
           {
@@ -638,23 +922,40 @@
           {
             id: "butt-joint",
             title: "Butt Joint Root Pass",
-            description: "1/8\" plate with 1/16\" gap, monitor heat input and tie-in.",
+            description:
+              '1/8" plate with 1/16" gap, monitor heat input and tie-in.',
             focus: "Heat control",
           },
           {
             id: "fabrication-mini",
             title: "Mini Fabrication Project",
-            description: "Assemble a small frame or rack; track prep, tack, and final welds.",
+            description:
+              "Assemble a small frame or rack; track prep, tack, and final welds.",
             focus: "Project",
           },
           {
             id: "cleanup",
             title: "Cleanup & Inspection",
-            description: "Grind, wire brush, and photograph your best weld for review.",
+            description:
+              "Grind, wire brush, and photograph your best weld for review.",
             focus: "Quality",
           },
         ],
       };
+
+      const CUSTOM_READING_KEY = "custom-readings";
+
+      function loadCustomReadings() {
+        try {
+          const stored = JSON.parse(
+            localStorage.getItem(CUSTOM_READING_KEY) || "[]",
+          );
+          return Array.isArray(stored) ? stored : [];
+        } catch (error) {
+          console.warn("Unable to parse saved readings", error);
+          return [];
+        }
+      }
 
       const templates = {
         tracker: document.getElementById("tracker-item-template"),
@@ -664,7 +965,10 @@
         readings: JSON.parse(localStorage.getItem("reading-progress") || "{}"),
         practice: JSON.parse(localStorage.getItem("practice-progress") || "{}"),
         notes: localStorage.getItem("welding-notes") || "",
-        streak: JSON.parse(localStorage.getItem("welding-streak") || "{\"count\":0,\"date\":null}"),
+        streak: JSON.parse(
+          localStorage.getItem("welding-streak") || '{"count":0,"date":null}',
+        ),
+        customReadings: loadCustomReadings(),
       };
 
       const readingListEl = document.getElementById("reading-list");
@@ -676,11 +980,29 @@
       const overallPercentageEl = document.getElementById("overall-percentage");
       const streakCountEl = document.getElementById("streak-count");
       const notesField = document.getElementById("notes-field");
+      const readingFilterEl = document.getElementById("reading-filter");
+      const addReadingForm = document.getElementById("add-reading-form");
+      const customSummaryEl = document.getElementById("custom-reading-summary");
+      const customListEl = document.getElementById("custom-reading-list");
 
-      const circle = document.querySelector(".progress-ring circle:nth-of-type(2)");
+      const circle = document.querySelector(
+        ".progress-ring circle:nth-of-type(2)",
+      );
       const circumference = 2 * Math.PI * 52;
 
       const formatPercent = (value) => `${Math.round(value * 100)}%`;
+
+      const getReadingItems = () => [
+        ...trackerData.readings,
+        ...state.customReadings,
+      ];
+
+      function saveCustomReadings() {
+        localStorage.setItem(
+          CUSTOM_READING_KEY,
+          JSON.stringify(state.customReadings),
+        );
+      }
 
       function updateStreak(completedToday) {
         const today = new Date().toISOString().slice(0, 10);
@@ -692,7 +1014,9 @@
             return;
           }
 
-          const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+          const yesterday = new Date(Date.now() - 86400000)
+            .toISOString()
+            .slice(0, 10);
           if (date === yesterday) {
             count += 1;
           } else {
@@ -712,44 +1036,114 @@
         list.forEach((item) => {
           const node = templates.tracker.content.cloneNode(true);
           const wrapper = node.querySelector(".tracker-item");
-          const checkbox = node.querySelector("input");
-          const title = node.querySelector("h3");
-          const description = node.querySelector("p");
-          const badge = node.querySelector(".badge");
-          const tags = node.querySelector(".tags");
+          const checkbox = node.querySelector(".toggle");
+          const content = node.querySelector(".tracker-content");
+          const titleEl = node.querySelector("h3");
+          const descriptionEl = node.querySelector("p");
+          const badgeEl = node.querySelector(".badge");
+          const tagsEl = node.querySelector(".tags");
+          const removeButton = node.querySelector(".remove-item");
 
-          title.textContent = item.title;
-          description.textContent = item.description;
-          badge.textContent = type === "reading" ? item.type : item.focus;
-          checkbox.checked = Boolean(state[type][item.id]);
-          wrapper.dataset.state = checkbox.checked ? "done" : "pending";
+          const isComplete = Boolean(state[type][item.id]);
+          checkbox.checked = isComplete;
+          checkbox.id = `${type}-${item.id}`;
+          wrapper.dataset.state = isComplete ? "done" : "pending";
 
-          if (item.tags && item.tags.length) {
-            tags.hidden = false;
-            item.tags.forEach((tag) => {
-              const span = document.createElement("span");
-              span.className = "tag";
-              span.textContent = tag;
-              tags.appendChild(span);
-            });
+          const badgeLabel =
+            type === "reading"
+              ? item.type || item.category || "Resource"
+              : item.focus || "";
+          badgeEl.textContent = badgeLabel;
+
+          descriptionEl.textContent = item.description || "";
+          descriptionEl.hidden = !item.description;
+
+          if (tagsEl) {
+            tagsEl.innerHTML = "";
+            const tagValues = new Set();
+            if (item.tags && item.tags.length) {
+              item.tags.forEach((tag) => tag && tagValues.add(tag));
+            }
+            if (type === "reading" && item.category) {
+              tagValues.add(item.category);
+            }
+
+            if (tagValues.size) {
+              tagsEl.hidden = false;
+              tagValues.forEach((tag) => {
+                const span = document.createElement("span");
+                span.className = "tag";
+                span.textContent = tag;
+                tagsEl.appendChild(span);
+              });
+            } else {
+              tagsEl.hidden = true;
+            }
           }
 
+          titleEl.textContent = "";
           if (item.link) {
             const anchor = document.createElement("a");
             anchor.href = item.link;
             anchor.target = "_blank";
             anchor.rel = "noopener";
+            anchor.className = "resource-link";
             anchor.innerHTML = `${item.title} <span>↗</span>`;
-            title.replaceWith(anchor);
+            titleEl.appendChild(anchor);
+          } else {
+            titleEl.textContent = item.title;
+          }
+
+          if (type === "reading") {
+            const filters = new Set();
+            const pushFilter = (value) => {
+              if (value) filters.add(String(value).toLowerCase());
+            };
+
+            pushFilter(item.category);
+            pushFilter(item.type);
+            if (item.tags && item.tags.length) {
+              item.tags.forEach((tag) => pushFilter(tag));
+            }
+
+            wrapper.dataset.filters = Array.from(filters).join(",");
+            wrapper.dataset.itemId = item.id;
+            wrapper.dataset.origin = item.origin || "default";
+
+            if (
+              item.origin === "custom" ||
+              String(item.id).startsWith("custom-")
+            ) {
+              removeButton.hidden = false;
+              removeButton.addEventListener("click", (event) => {
+                event.stopPropagation();
+                removeCustomReading(item.id);
+              });
+            } else {
+              removeButton.remove();
+            }
+          } else {
+            removeButton.remove();
           }
 
           checkbox.addEventListener("change", () => {
             state[type][item.id] = checkbox.checked;
-            localStorage.setItem(`${type}-progress`, JSON.stringify(state[type]));
+            localStorage.setItem(
+              `${type}-progress`,
+              JSON.stringify(state[type]),
+            );
             wrapper.dataset.state = checkbox.checked ? "done" : "pending";
             updateProgress();
             updateStreak(type === "practice" && checkbox.checked);
           });
+
+          if (content) {
+            content.addEventListener("click", (event) => {
+              if (event.target.closest("a")) return;
+              checkbox.checked = !checkbox.checked;
+              checkbox.dispatchEvent(new Event("change", { bubbles: true }));
+            });
+          }
 
           fragment.appendChild(node);
         });
@@ -759,16 +1153,24 @@
       }
 
       function updateProgress() {
-        const readingTotal = trackerData.readings.length;
+        const readingItems = getReadingItems();
+        const readingTotal = readingItems.length;
         const practiceTotal = trackerData.practice.length;
-        const readingDone = Object.values(state.readings).filter(Boolean).length;
-        const practiceDone = Object.values(state.practice).filter(Boolean).length;
+        const readingDone = readingItems.filter((item) =>
+          Boolean(state.readings[item.id]),
+        ).length;
+        const practiceDone = Object.values(state.practice).filter(
+          Boolean,
+        ).length;
 
         const readingFraction = readingTotal ? readingDone / readingTotal : 0;
-        const practiceFraction = practiceTotal ? practiceDone / practiceTotal : 0;
-        const overall = readingTotal + practiceTotal
-          ? (readingDone + practiceDone) / (readingTotal + practiceTotal)
+        const practiceFraction = practiceTotal
+          ? practiceDone / practiceTotal
           : 0;
+        const overall =
+          readingTotal + practiceTotal
+            ? (readingDone + practiceDone) / (readingTotal + practiceTotal)
+            : 0;
 
         readingCountEl.textContent = formatPercent(readingFraction);
         practiceCountEl.textContent = formatPercent(practiceFraction);
@@ -780,67 +1182,219 @@
         circle.style.strokeDashoffset = offset;
       }
 
-      function bindFilters() {
-        const buttons = document.querySelectorAll(".pill-menu button");
+      function collectReadingFilters() {
+        const filters = new Set();
+        getReadingItems().forEach((item) => {
+          if (item.category) filters.add(item.category.toLowerCase());
+          if (item.type) filters.add(item.type.toLowerCase());
+          if (item.tags && item.tags.length) {
+            item.tags.forEach((tag) => filters.add(tag.toLowerCase()));
+          }
+        });
+        return Array.from(filters).sort();
+      }
+
+      function populateReadingFilters() {
+        if (!readingFilterEl) return;
+        const currentValue = readingFilterEl.value || "all";
+        const filters = ["all", ...collectReadingFilters()];
+        readingFilterEl.innerHTML = "";
+
+        filters.forEach((filter) => {
+          const option = document.createElement("option");
+          option.value = filter;
+          option.textContent =
+            filter === "all"
+              ? "Show everything"
+              : filter.replace(/\b\w/g, (char) => char.toUpperCase());
+          readingFilterEl.appendChild(option);
+        });
+
+        if (filters.includes(currentValue)) {
+          readingFilterEl.value = currentValue;
+        } else {
+          readingFilterEl.value = "all";
+        }
+      }
+
+      function applyReadingFilter() {
+        if (!readingFilterEl) return;
+        const filter = readingFilterEl.value;
         const emptyMessage = document.querySelector("#reading .empty-message");
+        let visibleCount = 0;
 
-        buttons.forEach((button) => {
-          button.addEventListener("click", () => {
-            buttons.forEach((btn) => btn.classList.remove("active"));
-            button.classList.add("active");
-            const filter = button.dataset.filter;
-            const items = readingListEl.querySelectorAll(".tracker-item");
-            let visibleCount = 0;
+        readingListEl.querySelectorAll(".tracker-item").forEach((itemEl) => {
+          if (filter === "all") {
+            itemEl.hidden = false;
+            visibleCount += 1;
+            return;
+          }
 
-            items.forEach((itemEl) => {
-              const badge = itemEl.querySelector(".badge").textContent.toLowerCase();
-              const title = itemEl.querySelector("a")?.textContent.toLowerCase() ?? "";
-              const matches =
-                filter === "all" ||
-                title.includes(filter) ||
-                badge.includes(filter) ||
-                [...itemEl.querySelectorAll(".tag")].some((tag) => tag.textContent.includes(filter));
+          const filters = (itemEl.dataset.filters || "")
+            .split(",")
+            .filter(Boolean);
+          const matches = filters.includes(filter);
+          itemEl.hidden = !matches;
+          if (matches) visibleCount += 1;
+        });
 
-              itemEl.hidden = !matches;
-              if (matches) visibleCount += 1;
-            });
+        emptyMessage.hidden = visibleCount !== 0;
+      }
 
-            emptyMessage.hidden = visibleCount !== 0;
+      function bindReadingFilter() {
+        if (!readingFilterEl) return;
+        readingFilterEl.addEventListener("change", applyReadingFilter);
+      }
+
+      function updateCustomSummary() {
+        if (!customSummaryEl || !customListEl) return;
+        const hasCustom = state.customReadings.length > 0;
+        customSummaryEl.hidden = !hasCustom;
+
+        if (!hasCustom) {
+          customListEl.innerHTML = "";
+          return;
+        }
+
+        customListEl.innerHTML = "";
+        state.customReadings.forEach((item) => {
+          const li = document.createElement("li");
+          li.textContent = item.title;
+          customListEl.appendChild(li);
+        });
+      }
+
+      function renderReadingSection() {
+        renderTracker(getReadingItems(), readingListEl, "reading");
+        populateReadingFilters();
+        applyReadingFilter();
+        updateCustomSummary();
+        updateProgress();
+      }
+
+      function removeCustomReading(id) {
+        state.customReadings = state.customReadings.filter(
+          (item) => item.id !== id,
+        );
+        delete state.readings[id];
+        saveCustomReadings();
+        localStorage.setItem(
+          "reading-progress",
+          JSON.stringify(state.readings),
+        );
+        renderReadingSection();
+      }
+
+      function bindAddReadingForm() {
+        if (!addReadingForm) return;
+        addReadingForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const formData = new FormData(addReadingForm);
+          const title = (formData.get("title") || "").trim();
+          const link = (formData.get("link") || "").trim();
+          const description = (formData.get("description") || "").trim();
+          const category = (formData.get("category") || "").trim();
+
+          if (!title || !link) {
+            return;
+          }
+
+          const formatCategory = (value) =>
+            value
+              ? value
+                  .split(/\s+/)
+                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(" ")
+              : "";
+
+          const customItem = {
+            id: `custom-${Date.now()}`,
+            title,
+            link,
+            description,
+            category,
+            type: formatCategory(category) || "Custom",
+            origin: "custom",
+            tags: category ? [category] : [],
+          };
+
+          state.customReadings.push(customItem);
+          saveCustomReadings();
+          addReadingForm.reset();
+          renderReadingSection();
+        });
+      }
+
+      function bindClearCustomReadings() {
+        const clearButton = document.querySelector(
+          '[data-action="clear-custom-readings"]',
+        );
+        if (!clearButton) return;
+        clearButton.addEventListener("click", () => {
+          if (!state.customReadings.length) {
+            return;
+          }
+          state.customReadings = [];
+          saveCustomReadings();
+          const keys = Object.keys(state.readings);
+          keys.forEach((key) => {
+            if (key.startsWith("custom-")) {
+              delete state.readings[key];
+            }
           });
+          localStorage.setItem(
+            "reading-progress",
+            JSON.stringify(state.readings),
+          );
+          renderReadingSection();
         });
       }
 
       function bindNotes() {
         notesField.value = state.notes;
 
-        document.querySelector('[data-action="save-notes"]').addEventListener("click", () => {
-          state.notes = notesField.value.trim();
-          localStorage.setItem("welding-notes", state.notes);
-          notesField.classList.add("saved");
-          setTimeout(() => notesField.classList.remove("saved"), 600);
-        });
+        document
+          .querySelector('[data-action="save-notes"]')
+          .addEventListener("click", () => {
+            state.notes = notesField.value.trim();
+            localStorage.setItem("welding-notes", state.notes);
+            notesField.classList.add("saved");
+            setTimeout(() => notesField.classList.remove("saved"), 600);
+          });
 
-        document.querySelector('[data-action="clear-notes"]').addEventListener("click", () => {
-          notesField.value = "";
-          state.notes = "";
-          localStorage.removeItem("welding-notes");
-        });
+        document
+          .querySelector('[data-action="clear-notes"]')
+          .addEventListener("click", () => {
+            notesField.value = "";
+            state.notes = "";
+            localStorage.removeItem("welding-notes");
+          });
       }
 
       function bindResets() {
         document
-          .querySelector('[data-action="reset-readings"]')
-          .addEventListener("click", () => {
-            state.readings = {};
-            localStorage.removeItem("reading-progress");
-            renderTracker(trackerData.readings, readingListEl, "reading");
-            updateProgress();
+          .querySelectorAll('[data-action="reset-readings"]')
+          .forEach((button) => {
+            button.addEventListener("click", () => {
+              state.readings = {};
+              localStorage.removeItem("reading-progress");
+              renderReadingSection();
+            });
           });
       }
 
-      renderTracker(trackerData.readings, readingListEl, "reading");
+      function initializeReadingList() {
+        if (!state.readings) {
+          state.readings = {};
+        }
+        renderReadingSection();
+      }
+
+      initializeReadingList();
       renderTracker(trackerData.practice, practiceListEl, "practice");
-      bindFilters();
+      bindReadingFilter();
+      bindAddReadingForm();
+      bindClearCustomReadings();
       bindNotes();
       bindResets();
       updateProgress();
