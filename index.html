@@ -1031,6 +1031,8 @@
       }
 
       function renderTracker(list, target, type) {
+        const progressKey = type === "reading" ? "readings" : type;
+        const progressState = state[progressKey] || {};
         const fragment = document.createDocumentFragment();
 
         list.forEach((item) => {
@@ -1044,7 +1046,7 @@
           const tagsEl = node.querySelector(".tags");
           const removeButton = node.querySelector(".remove-item");
 
-          const isComplete = Boolean(state[type][item.id]);
+          const isComplete = Boolean(progressState[item.id]);
           checkbox.checked = isComplete;
           checkbox.id = `${type}-${item.id}`;
           wrapper.dataset.state = isComplete ? "done" : "pending";
@@ -1127,10 +1129,10 @@
           }
 
           checkbox.addEventListener("change", () => {
-            state[type][item.id] = checkbox.checked;
+            state[progressKey][item.id] = checkbox.checked;
             localStorage.setItem(
               `${type}-progress`,
-              JSON.stringify(state[type]),
+              JSON.stringify(state[progressKey]),
             );
             wrapper.dataset.state = checkbox.checked ? "done" : "pending";
             updateProgress();
