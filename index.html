@@ -381,6 +381,11 @@
         font-size: 0.75rem;
       }
 
+      .form-error {
+        color: #fca5a5;
+        font-size: 0.85rem;
+      }
+
       .form-actions {
         display: flex;
         gap: 0.75rem;
@@ -702,7 +707,7 @@
                 <option value="all">Show everything</option>
               </select>
             </div>
-            <form id="add-reading-form" class="custom-reading-form">
+            <form id="add-reading-form" class="custom-reading-form" novalidate>
               <div class="field">
                 <label for="reading-title">Title</label>
                 <input
@@ -745,6 +750,7 @@
                   placeholder="e.g. safety, symbols, process"
                 />
               </div>
+              <p class="form-error" data-form-error hidden role="alert"></p>
               <button class="primary" type="submit">
                 Add to reading checklist
               </button>
@@ -1289,25 +1295,77 @@
 
       function bindAddReadingForm() {
         if (!addReadingForm) return;
+        const errorEl = addReadingForm.querySelector("[data-form-error]");
+        const showFormError = (message) => {
+          if (!errorEl) return;
+          errorEl.textContent = message || "";
+          errorEl.hidden = !message;
+        };
+
+        const formatCategory = (value) =>
+          value
+            ? value
+                .split(/\s+/)
+                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ")
+            : "";
+
         addReadingForm.addEventListener("submit", (event) => {
           event.preventDefault();
+          showFormError("");
+
           const formData = new FormData(addReadingForm);
           const title = (formData.get("title") || "").trim();
-          const link = (formData.get("link") || "").trim();
+          let link = (formData.get("link") || "").trim();
           const description = (formData.get("description") || "").trim();
-          const category = (formData.get("category") || "").trim();
+          const categoryInput = (formData.get("category") || "").trim();
 
-          if (!title || !link) {
+          if (!title) {
+            showFormError("Add a lesson title to continue.");
             return;
           }
 
-          const formatCategory = (value) =>
-            value
-              ? value
-                  .split(/\s+/)
-                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                  .join(" ")
-              : "";
+          if (!link) {
+            showFormError("Paste the lesson link so we can save it.");
+            return;
+          }
+
+          if (!/^([a-z][a-z0-9+.-]*:)/i.test(link)) {
+            link = `https://${link.replace(/^\/+/, "")}`;
+          }
+
+          try {
+            link = new URL(link).toString();
+          } catch (error) {
+            showFormError(
+              "That link doesn't look valid. Try adding the full URL.",
+            );
+            return;
+          }
+
+          const category = formatCategory(categoryInput);
+          const tags = categoryInput
+            ? Array.from(
+                new Set(
+                  [categoryInput, category, categoryInput.toLowerCase()].filter(
+                    Boolean,
+                  ),
+                ),
+              )
+            : [];
+
+          const normalizedTitle = title.toLowerCase();
+          const duplicate = getReadingItems().some((item) => {
+            const titleMatch =
+              (item.title || "").trim().toLowerCase() === normalizedTitle;
+            const linkMatch = item.link && item.link === link;
+            return titleMatch || linkMatch;
+          });
+
+          if (duplicate) {
+            showFormError("That lesson is already on your checklist.");
+            return;
+          }
 
           const customItem = {
             id: `custom-${Date.now()}`,
@@ -1315,14 +1373,19 @@
             link,
             description,
             category,
-            type: formatCategory(category) || "Custom",
+            type: category || "Custom",
             origin: "custom",
-            tags: category ? [category] : [],
+            tags,
           };
 
           state.customReadings.push(customItem);
           saveCustomReadings();
           addReadingForm.reset();
+          const titleField = addReadingForm.querySelector('[name="title"]');
+          if (titleField) {
+            titleField.focus();
+          }
+          showFormError("");
           renderReadingSection();
         });
       }
