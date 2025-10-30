@@ -436,9 +436,19 @@
         transform-origin: left;
       }
 
+      .notes-grid {
+        align-items: start;
+      }
+
+      .notes-card form {
+        display: grid;
+        gap: 1.1rem;
+        margin-top: 1.25rem;
+      }
+
       .notes-card textarea {
         width: 100%;
-        min-height: 120px;
+        min-height: 160px;
         border-radius: 16px;
         border: 1px solid rgba(148, 163, 184, 0.25);
         background: rgba(2, 6, 23, 0.75);
@@ -479,7 +489,6 @@
         background: transparent;
         color: var(--text-subtle);
         border: 1px solid rgba(148, 163, 184, 0.4);
-        margin-left: 0.75rem;
       }
 
       .notes-card button.secondary:hover {
@@ -489,8 +498,71 @@
 
       .notes-card .actions {
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.75rem;
+        margin-top: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .notes-card .actions button {
+        flex: none;
+      }
+
+      .notes-history {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .notes-list {
+        list-style: none;
+        display: grid;
+        gap: 1rem;
         margin-top: 1rem;
+      }
+
+      .note-entry {
+        background: rgba(15, 24, 39, 0.65);
+        border-radius: 16px;
+        border: 1px solid rgba(148, 163, 184, 0.12);
+        padding: 1rem 1.1rem;
+        display: grid;
+        gap: 0.6rem;
+      }
+
+      .note-entry header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .note-entry time {
+        font-size: 0.85rem;
+        color: var(--accent);
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+
+      .note-entry button {
+        background: none;
+        border: none;
+        color: var(--text-subtle);
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: color 0.2s ease;
+      }
+
+      .note-entry button:hover {
+        color: var(--accent);
+      }
+
+      .note-entry p {
+        font-size: 0.95rem;
+        line-height: 1.55;
+        white-space: pre-wrap;
       }
 
       .empty-message {
@@ -593,10 +665,10 @@
           </p>
         </div>
         <nav aria-label="Section navigation">
-          <a href="#overview">Overview</a>
-          <a href="#reading">Reading Log</a>
-          <a href="#practice">Practice Sessions</a>
-          <a href="#notes">Reflection</a>
+          <a href="#overview">Dashboard</a>
+          <a href="#reading">Readings</a>
+          <a href="#practice">Practice</a>
+          <a href="#notes">Notes</a>
         </nav>
       </div>
     </header>
@@ -796,21 +868,64 @@
           <div class="card">
             <div class="tracker-list" id="practice-list"></div>
           </div>
-          <div class="card notes-card" id="notes">
-            <h3 style="font-size: 1.1rem; font-weight: 700">
-              Reflection Notes
-            </h3>
+        </div>
+      </section>
+      <section id="notes">
+        <div class="flex-between">
+          <h2>Notes Journal</h2>
+          <p class="subtle">
+            Capture reflections after each study or practice block.
+          </p>
+        </div>
+        <div class="cards two notes-grid">
+          <div class="card notes-card">
+            <h3 style="font-size: 1.1rem; font-weight: 700">New entry</h3>
             <p class="subtle" style="margin-top: 0.5rem">
-              What went well? What needs attention next time?
+              We'll timestamp and save each note on this device only.
             </p>
-            <textarea
-              id="notes-field"
-              placeholder="Record key learnings, machines used, fit-up issues, etc."
-            ></textarea>
-            <div class="actions">
-              <button class="secondary" data-action="clear-notes">Clear</button>
-              <button data-action="save-notes">Save Note</button>
+            <form id="note-form" class="note-form" novalidate>
+              <div class="field">
+                <label for="note-text">Reflection</label>
+                <textarea
+                  id="note-text"
+                  name="note"
+                  rows="6"
+                  required
+                  placeholder="Record key learnings, machines used, fit-up issues, etc."
+                ></textarea>
+              </div>
+              <p class="form-error" data-note-error hidden role="alert"></p>
+              <div class="actions">
+                <button type="reset" class="secondary">Clear</button>
+                <button type="submit">Save journal entry</button>
+              </div>
+            </form>
+          </div>
+          <div class="card notes-history">
+            <div
+              class="flex-between"
+              style="gap: 1rem; align-items: flex-start"
+            >
+              <div>
+                <h3 style="font-size: 1.1rem; font-weight: 700">
+                  Stored notes
+                </h3>
+                <p class="subtle" style="margin-top: 0.35rem">
+                  Entries are ordered with the most recent first.
+                </p>
+              </div>
+              <button
+                class="link-button"
+                type="button"
+                data-action="clear-notes"
+              >
+                Clear all
+              </button>
             </div>
+            <p class="subtle" data-empty-notes style="margin-top: 1rem">
+              No notes saved yet. Add your first reflection to build your log.
+            </p>
+            <ul class="notes-list" id="notes-list"></ul>
           </div>
         </div>
       </section>
@@ -950,6 +1065,7 @@
       };
 
       const CUSTOM_READING_KEY = "custom-readings";
+      const NOTES_KEY = "welding-note-entries";
 
       function loadCustomReadings() {
         try {
@@ -963,6 +1079,39 @@
         }
       }
 
+      function loadNotes() {
+        try {
+          const stored = JSON.parse(localStorage.getItem(NOTES_KEY) || "[]");
+          let notes = Array.isArray(stored)
+            ? stored.filter(
+                (note) =>
+                  note &&
+                  typeof note.id === "string" &&
+                  typeof note.body === "string" &&
+                  typeof note.createdAt === "string",
+              )
+            : [];
+
+          const legacy = localStorage.getItem("welding-notes");
+          if (legacy && legacy.trim()) {
+            notes.unshift({
+              id: `legacy-${Date.now()}`,
+              body: legacy.trim(),
+              createdAt: new Date().toISOString(),
+            });
+            localStorage.removeItem("welding-notes");
+            localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
+          }
+
+          return notes.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+          );
+        } catch (error) {
+          console.warn("Unable to parse saved notes", error);
+          return [];
+        }
+      }
+
       const templates = {
         tracker: document.getElementById("tracker-item-template"),
       };
@@ -970,7 +1119,7 @@
       const state = {
         readings: JSON.parse(localStorage.getItem("reading-progress") || "{}"),
         practice: JSON.parse(localStorage.getItem("practice-progress") || "{}"),
-        notes: localStorage.getItem("welding-notes") || "",
+        notes: loadNotes(),
         streak: JSON.parse(
           localStorage.getItem("welding-streak") || '{"count":0,"date":null}',
         ),
@@ -985,7 +1134,11 @@
       const practiceBarEl = document.getElementById("practice-bar");
       const overallPercentageEl = document.getElementById("overall-percentage");
       const streakCountEl = document.getElementById("streak-count");
-      const notesField = document.getElementById("notes-field");
+      const noteForm = document.getElementById("note-form");
+      const noteField = document.getElementById("note-text");
+      const noteError = document.querySelector("[data-note-error]");
+      const notesListEl = document.getElementById("notes-list");
+      const emptyNotesEl = document.querySelector("[data-empty-notes]");
       const readingFilterEl = document.getElementById("reading-filter");
       const addReadingForm = document.getElementById("add-reading-form");
       const customSummaryEl = document.getElementById("custom-reading-summary");
@@ -997,6 +1150,16 @@
       const circumference = 2 * Math.PI * 52;
 
       const formatPercent = (value) => `${Math.round(value * 100)}%`;
+      const formatDateTime = (value) => {
+        try {
+          return new Intl.DateTimeFormat(undefined, {
+            dateStyle: "medium",
+            timeStyle: "short",
+          }).format(new Date(value));
+        } catch (error) {
+          return value;
+        }
+      };
 
       const getReadingItems = () => [
         ...trackerData.readings,
@@ -1008,6 +1171,10 @@
           CUSTOM_READING_KEY,
           JSON.stringify(state.customReadings),
         );
+      }
+
+      function saveNotes() {
+        localStorage.setItem(NOTES_KEY, JSON.stringify(state.notes));
       }
 
       function updateStreak(completedToday) {
@@ -1280,6 +1447,43 @@
         updateProgress();
       }
 
+      function renderNotes() {
+        if (!notesListEl || !emptyNotesEl) return;
+        notesListEl.innerHTML = "";
+
+        const hasNotes = state.notes.length > 0;
+        emptyNotesEl.hidden = hasNotes;
+
+        if (!hasNotes) {
+          return;
+        }
+
+        state.notes.forEach((note) => {
+          const item = document.createElement("li");
+          item.className = "note-entry";
+
+          const header = document.createElement("header");
+          const timeEl = document.createElement("time");
+          timeEl.dateTime = note.createdAt;
+          timeEl.textContent = formatDateTime(note.createdAt);
+          header.appendChild(timeEl);
+
+          const removeButton = document.createElement("button");
+          removeButton.type = "button";
+          removeButton.textContent = "Remove";
+          removeButton.dataset.noteId = note.id;
+          removeButton.setAttribute("data-note-remove", note.id);
+          header.appendChild(removeButton);
+
+          const body = document.createElement("p");
+          body.textContent = note.body;
+
+          item.appendChild(header);
+          item.appendChild(body);
+          notesListEl.appendChild(item);
+        });
+      }
+
       function removeCustomReading(id) {
         state.customReadings = state.customReadings.filter(
           (item) => item.id !== id,
@@ -1416,24 +1620,68 @@
       }
 
       function bindNotes() {
-        notesField.value = state.notes;
+        if (!noteForm || !noteField || !notesListEl) return;
 
-        document
-          .querySelector('[data-action="save-notes"]')
-          .addEventListener("click", () => {
-            state.notes = notesField.value.trim();
-            localStorage.setItem("welding-notes", state.notes);
-            notesField.classList.add("saved");
-            setTimeout(() => notesField.classList.remove("saved"), 600);
-          });
+        const showNoteError = (message) => {
+          if (!noteError) return;
+          noteError.textContent = message || "";
+          noteError.hidden = !message;
+        };
 
-        document
-          .querySelector('[data-action="clear-notes"]')
-          .addEventListener("click", () => {
-            notesField.value = "";
-            state.notes = "";
-            localStorage.removeItem("welding-notes");
+        renderNotes();
+
+        noteForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const body = noteField.value.trim();
+
+          if (!body) {
+            showNoteError("Add a reflection before saving.");
+            noteField.focus();
+            return;
+          }
+
+          const note = {
+            id: `note-${Date.now()}`,
+            body,
+            createdAt: new Date().toISOString(),
+          };
+
+          state.notes.unshift(note);
+          saveNotes();
+          renderNotes();
+          noteForm.reset();
+          showNoteError("");
+          noteField.focus();
+        });
+
+        noteForm.addEventListener("reset", () => {
+          showNoteError("");
+        });
+
+        notesListEl.addEventListener("click", (event) => {
+          const button = event.target.closest("[data-note-remove]");
+          if (!button) return;
+          const { noteId } = button.dataset;
+          if (!noteId) return;
+
+          state.notes = state.notes.filter((note) => note.id !== noteId);
+          saveNotes();
+          renderNotes();
+        });
+
+        const clearButton = document.querySelector(
+          '[data-action="clear-notes"]',
+        );
+        if (clearButton) {
+          clearButton.addEventListener("click", () => {
+            if (!state.notes.length) {
+              return;
+            }
+            state.notes = [];
+            saveNotes();
+            renderNotes();
           });
+        }
       }
 
       function bindResets() {
