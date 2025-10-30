@@ -1,1 +1,353 @@
+import React from "react";
+import { motion } from "framer-motion";
+import { Printer, ExternalLink } from "lucide-react";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 
+const equipment = [
+  { category: "Welder", item: "Lincoln 140 MP / Hobart 140", notes: "Easy setup & smooth arc" },
+  { category: "Gas", item: "75% Argon / 25% CO₂", notes: "Clean MIG welds" },
+  { category: "Wire", item: "ER70S-6 (.030\")", notes: "Mild steel fabrication" },
+  { category: "PPE", item: "Auto-darkening helmet, gloves, jacket", notes: "Safety essentials" },
+  { category: "Tools", item: "Grinder, wire brush, clamps, magnets", notes: "Prep, fit-up, cleanup" },
+];
+
+const settings = [
+  { material: '1/8"', wire: "ER70S-6 (.030\")", ipm: "300–350", volts: "18–19", cfh: "20–25" },
+  { material: '3/16"', wire: "ER70S-6 (.030\")", ipm: "350–400", volts: "19–20", cfh: "25" },
+  { material: '1/4"', wire: "ER70S-6 (.035\")", ipm: "400–450", volts: "20–22", cfh: "25" },
+];
+
+const defects = [
+  { defect: "Porosity", cause: "Dirty metal / wind / gas issues", fix: "Clean, shield drafts, 20–25 CFH" },
+  { defect: "Undercut", cause: "Voltage high / fast travel / angle", fix: "Lower volts, slow, correct angle" },
+  { defect: "Cold Lap", cause: "Insufficient heat / fusion", fix: "Increase volts or reduce travel speed" },
+  { defect: "Burn‑Through", cause: "Too hot or too slow", fix: "Lower volts or move faster" },
+];
+
+const joints = [
+  { joint: "T‑Joint", desc: "90° corner", tips: "Aim at the corner; tiny weave OK." },
+  { joint: "Lap Joint", desc: "Overlapping plates", tips: "Favor lower plate; ~45° torch." },
+  { joint: "Butt Joint", desc: "Edge‑to‑edge", tips: "Keep small gap; control heat/fit‑up." },
+];
+
+const Img = ({ src, alt }: { src: string; alt: string }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 8 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.35 }}
+    className="rounded-2xl overflow-hidden border border-slate-800 bg-slate-900/40"
+  >
+    {/* eslint-disable-next-line @next/next/no-img-element */}
+    <img src={src} alt={alt} className="w-full h-auto" />
+  </motion.div>
+);
+
+function SectionHeading({ id, title, tags }: { id: string; title: string; tags?: string[] }) {
+  return (
+    <div id={id} className="scroll-mt-28">
+      <div className="flex items-center justify-between gap-4">
+        <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">{title}</h2>
+        <div className="hidden md:flex gap-2">
+          {tags?.map((t) => (
+            <Badge key={t} variant="outline" className="rounded-full border-slate-700 text-slate-300">
+              {t}
+            </Badge>
+          ))}
+        </div>
+      </div>
+      <Separator className="my-4 bg-slate-800" />
+    </div>
+  );
+}
+
+export default function WeldingFabLearningSite() {
+  return (
+    <div className="min-h-screen bg-slate-950 text-slate-100">
+      <header className="sticky top-0 z-50 border-b border-slate-800/80 backdrop-blur supports-[backdrop-filter]:bg-slate-950/70">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3 justify-between">
+          <div className="font-extrabold tracking-tight text-lg md:text-xl">Beginner Welding & Fabrication</div>
+          <nav className="hidden md:flex gap-2">
+            {[
+              ["overview", "Overview"],
+              ["equipment", "Equipment"],
+              ["week1", "Week 1"],
+              ["week2", "Week 2"],
+              ["week3", "Week 3"],
+              ["week4", "Week 4"],
+              ["settings", "Settings"],
+              ["defects", "Defects"],
+              ["resources", "Resources"],
+            ].map(([href, label]) => (
+              <a
+                key={href}
+                href={`#${href}`}
+                className="px-3 py-1.5 rounded-full border border-slate-800 hover:bg-slate-900/60 text-slate-300"
+              >
+                {label}
+              </a>
+            ))}
+          </nav>
+          <div className="flex gap-2">
+            <Button className="rounded-xl" variant="secondary" onClick={() => window.print()}>
+              <Printer className="mr-2 h-4 w-4" /> Print / Save PDF
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      <main className="max-w-6xl mx-auto px-4 py-6">
+        {/* HERO */}
+        <section id="overview" className="grid md:grid-cols-2 gap-5 items-start scroll-mt-28">
+          <Card className="rounded-2xl border-slate-800 bg-slate-900/40">
+            <CardHeader>
+              <Badge variant="outline" className="w-fit rounded-full border-slate-700 text-slate-300">MIG Focus • 4‑week plan • Fabrication</Badge>
+              <CardTitle className="text-3xl md:text-4xl">Learn to Weld for Fabrication</CardTitle>
+            </CardHeader>
+            <CardContent className="text-slate-300 space-y-3">
+              <p>
+                <span className="font-semibold">Goal:</span> Build skills for brackets, frames & small structures using MIG.
+                Power: <span className="font-semibold">120V</span>. Gas: <span className="font-semibold">75% Argon / 25% CO₂</span>. Wire: <span className="font-semibold">ER70S‑6 (.030\")</span>.
+              </p>
+              <div className="rounded-xl border border-slate-800 p-3 bg-slate-950/60">
+                <p className="font-semibold mb-1">Recommended Starter Machines</p>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>Lincoln Electric <b>140 MP</b> — 120V, MIG/Flux‑core; multi‑process</li>
+                  <li>Hobart <b>Handler 140</b> — 120V, MIG/Flux‑core; simple & reliable</li>
+                </ul>
+                <p className="text-sm text-slate-400 mt-2">Widely available, quality arc, easy service & resale.</p>
+              </div>
+            </CardContent>
+          </Card>
+          <Img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/MIG_welding.jpg" alt="MIG welding in action" />
+        </section>
+
+        {/* EQUIPMENT */}
+        <section id="equipment" className="mt-8">
+          <SectionHeading id="equipment" title="Equipment Checklist" tags={["PPE", "Tools", "Gas", "Wire"]} />
+          <div className="grid md:grid-cols-2 gap-4">
+            <Card className="rounded-2xl border-slate-800 bg-slate-900/40">
+              <CardContent className="pt-6">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Category</TableHead>
+                      <TableHead>Item</TableHead>
+                      <TableHead>Notes</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {equipment.map((row) => (
+                      <TableRow key={row.category}>
+                        <TableCell>{row.category}</TableCell>
+                        <TableCell>{row.item}</TableCell>
+                        <TableCell className="text-slate-400">{row.notes}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+            <div className="space-y-4">
+              <Img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Welding_PPE.jpg" alt="Welding PPE" />
+              <p className="text-sm text-slate-400">Auto‑darkening helmet, gauntlet gloves, FR jacket/sleeves. Ventilation & fire safety are non‑negotiable.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* WEEK 1 */}
+        <section id="week1" className="mt-8">
+          <SectionHeading id="week1" title="Week 1 — Safety & Fundamentals" tags={["PPE", "Setup", "Beads"]} />
+          <div className="grid md:grid-cols-2 gap-4 items-start">
+            <Card className="rounded-2xl border-slate-800 bg-slate-900/40">
+              <CardContent className="pt-6">
+                <ul className="list-disc pl-5 space-y-2">
+                  <li><b>Safety:</b> PPE, fire watch, ventilation, cylinder handling.</li>
+                  <li><b>Setup:</b> DCEP polarity, stick‑out 3/8"–1/2", 20–25 CFH.</li>
+                  <li><b>Practice:</b> Straight beads on clean flat coupons.</li>
+                  <li><b>Observe:</b> Watch the puddle; listen for a steady sizzle.</li>
+                </ul>
+                <p className="text-sm text-slate-400 mt-2">Clean to shiny metal; contaminants cause porosity.</p>
+              </CardContent>
+            </Card>
+            <Img src="https://upload.wikimedia.org/wikipedia/commons/5/54/MIG_welding_gun_angle_diagram.png" alt="MIG gun angle diagram" />
+          </div>
+        </section>
+
+        {/* WEEK 2 */}
+        <section id="week2" className="mt-8">
+          <SectionHeading id="week2" title="Week 2 — Flat Welds & Patterns" tags={["Stringers", "Weaves"]} />
+          <div className="grid md:grid-cols-2 gap-4 items-start">
+            <Card className="rounded-2xl border-slate-800 bg-slate-900/40">
+              <CardContent className="pt-6">
+                <ul className="list-disc pl-5 space-y-2">
+                  <li>Run <b>stringers</b>, then try small weave patterns (<kbd className="px-1.5 py-0.5 rounded border border-slate-600">e</kbd>/<kbd className="px-1.5 py-0.5 rounded border border-slate-600">u</kbd>).</li>
+                  <li>Keep travel speed & gun angle consistent; overlap beads neatly.</li>
+                  <li>Grind/brush; inspect for undercut & porosity.</li>
+                </ul>
+              </CardContent>
+            </Card>
+            <Img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Welding_patterns.png" alt="Weld bead patterns" />
+          </div>
+        </section>
+
+        {/* WEEK 3 */}
+        <section id="week3" className="mt-8">
+          <SectionHeading id="week3" title="Week 3 — Joints & Angles" tags={["T‑Joint", "Lap", "Butt"]} />
+          <div className="grid md:grid-cols-2 gap-4 items-start">
+            <Card className="rounded-2xl border-slate-800 bg-slate-900/40">
+              <CardContent className="pt-6">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Joint</TableHead>
+                      <TableHead>Description</TableHead>
+                      <TableHead>Tips</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {joints.map((j) => (
+                      <TableRow key={j.joint}>
+                        <TableCell>{j.joint}</TableCell>
+                        <TableCell>{j.desc}</TableCell>
+                        <TableCell className="text-slate-400">{j.tips}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+            <Img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Weld_joint_types.png" alt="Common weld joints" />
+          </div>
+        </section>
+
+        {/* WEEK 4 */}
+        <section id="week4" className="mt-8">
+          <SectionHeading id="week4" title="Week 4 — Fabrication Projects" tags={["Fit‑Up", "Sequence", "Finish"]} />
+          <div className="grid md:grid-cols-2 gap-4 items-start">
+            <Card className="rounded-2xl border-slate-800 bg-slate-900/40">
+              <CardContent className="pt-6">
+                <ul className="list-disc pl-5 space-y-2">
+                  <li><b>Fit‑Up:</b> Measure, cut, deburr; square with magnets/clamps.</li>
+                  <li><b>Sequence:</b> Tack all corners; stagger welds to control warp.</li>
+                  <li><b>Finish:</b> Dress beads where needed; protect with paint.</li>
+                </ul>
+              </CardContent>
+            </Card>
+            <Img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Tack_weld_sequence.png" alt="Tack weld sequence" />
+          </div>
+          <div className="mt-4">
+            <Img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Welded_frame_fabrication.jpg" alt="Fabricated frame example" />
+            <p className="text-sm text-slate-400 mt-2">Starter builds: a simple angle‑iron frame, tool rack, or cart.</p>
+          </div>
+        </section>
+
+        {/* SETTINGS */}
+        <section id="settings" className="mt-8">
+          <SectionHeading id="settings" title="MIG Fabrication Settings (Starting Points)" tags={[".030\" ", "20–25 CFH", "Sound & Puddle"]} />
+          <Card className="rounded-2xl border-slate-800 bg-slate-900/40">
+            <CardContent className="pt-6">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Material</TableHead>
+                    <TableHead>Wire</TableHead>
+                    <TableHead>Wire Speed (ipm)</TableHead>
+                    <TableHead>Voltage (V)</TableHead>
+                    <TableHead>Gas Flow (CFH)</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {settings.map((s) => (
+                    <TableRow key={s.material}>
+                      <TableCell>{s.material}</TableCell>
+                      <TableCell>{s.wire}</TableCell>
+                      <TableCell>{s.ipm}</TableCell>
+                      <TableCell>{s.volts}</TableCell>
+                      <TableCell>{s.cfh}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              <p className="text-sm text-slate-400 mt-3">Run test beads and tune by sound & puddle behavior. Watch duty cycle on 120V units.</p>
+              <div className="mt-3">
+                <Img src="https://upload.wikimedia.org/wikipedia/commons/8/87/MIG_welder_controls.jpg" alt="MIG welder controls" />
+              </div>
+            </CardContent>
+          </Card>
+        </section>
+
+        {/* DEFECTS */}
+        <section id="defects" className="mt-8">
+          <SectionHeading id="defects" title="Common Weld Defects & Fixes" tags={["Troubleshooting", "Quality"]} />
+          <div className="grid md:grid-cols-2 gap-4 items-start">
+            <Card className="rounded-2xl border-slate-800 bg-slate-900/40">
+              <CardContent className="pt-6">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Defect</TableHead>
+                      <TableHead>Cause</TableHead>
+                      <TableHead>Fix</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {defects.map((d) => (
+                      <TableRow key={d.defect}>
+                        <TableCell>{d.defect}</TableCell>
+                        <TableCell>{d.cause}</TableCell>
+                        <TableCell className="text-slate-400">{d.fix}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+            <Img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Weld_defects.png" alt="Weld defects examples" />
+          </div>
+        </section>
+
+        {/* RESOURCES */}
+        <section id="resources" className="mt-8">
+          <SectionHeading id="resources" title="Resources & Next Steps" tags={["YouTube", "Blueprints", "TIG"]} />
+          <div className="grid md:grid-cols-2 gap-4 items-start">
+            <Card className="rounded-2xl border-slate-800 bg-slate-900/40">
+              <CardContent className="pt-6 space-y-2 text-slate-300">
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>Welding Tips & Tricks (Jody Collier)</li>
+                  <li>The Fabrication Series</li>
+                  <li>ChuckE2009</li>
+                  <li><span className="font-semibold">Upgrade path:</span> Flux‑core for outdoors → TIG for aluminum & precision</li>
+                </ul>
+              </CardContent>
+            </Card>
+            <Img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/TIG_welding_2.jpg" alt="TIG welding example" />
+          </div>
+          <p className="text-xs text-slate-500 mt-3 flex items-center gap-1">Images courtesy of Wikimedia Commons and other open educational resources. <ExternalLink className="h-3.5 w-3.5" /></p>
+        </section>
+      </main>
+
+      <div className="fixed right-4 bottom-4">
+        <Button className="rounded-xl" onClick={() => window.print()}>
+          <Printer className="mr-2 h-4 w-4" /> Print / Save PDF
+        </Button>
+      </div>
+    </div>
+  );
+}
