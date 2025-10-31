@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welding Study Hub – Readings</title>
+    <title>Welding Study Hub – Practice</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -12,14 +12,14 @@
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body data-page="reading">
+  <body data-page="practice">
     <header>
       <div class="wrapper">
         <div class="top-bar">
           <a class="title" href="index.html">Welding Study Hub</a>
           <nav aria-label="Primary navigation">
-            <a class="active" href="index.html">Readings</a>
-            <a href="practice.html">Practice</a>
+            <a href="index.html">Readings</a>
+            <a class="active" href="practice.html">Practice</a>
             <a href="notes.html">Notes</a>
           </nav>
         </div>
@@ -54,10 +54,11 @@
             <span id="overall-percentage">0%</span>
           </div>
           <div>
-            <h1 class="page-heading">Curate your welding reading streak</h1>
+            <h1 class="page-heading">Run intentional practice reps</h1>
             <p class="lead">
-              Check off lessons as you complete them and build your own linked
-              study plan. Progress and notes are saved locally in your browser.
+              Toggle drills as you complete them and focus each session. Notes
+              and progress are saved locally, so you can review what worked next
+              time.
             </p>
             <div class="cards three" style="margin-top: 1.5rem">
               <div class="card" style="padding: 1.1rem 1.3rem">
@@ -89,14 +90,14 @@
                     >0 days</strong
                   >
                   <p class="subtle" style="margin-top: 0.35rem">
-                    We only update streaks when you log practice completions.
+                    Keep the streak alive by checking off practice wins.
                   </p>
                 </div>
               </div>
             </div>
             <div class="quick-actions">
               <button class="primary" type="button" data-open-note>
-                Jot a note
+                Capture a note
               </button>
               <a class="link-button" href="notes.html">Open journal</a>
             </div>
@@ -106,105 +107,13 @@
 
       <section>
         <div class="section-heading">
-          <h2>Reading checklist</h2>
+          <h2>Practice playlist</h2>
           <p class="subtle">
-            Link lessons, diagrams, or quizzes as you find them.
+            Focus on fundamentals, positioning, and clean fit-up.
           </p>
         </div>
-        <div class="cards two">
-          <div class="card">
-            <div class="tracker-toolbar">
-              <label class="subtle" for="reading-filter">Filter topics</label>
-              <select id="reading-filter">
-                <option value="all">All readings</option>
-                <option value="safety">Safety</option>
-                <option value="process">Process</option>
-                <option value="theory">Theory</option>
-                <option value="blueprint">Blueprints</option>
-                <option value="custom">Custom only</option>
-              </select>
-            </div>
-            <div class="tracker-list" id="reading-list"></div>
-            <p class="empty-message" hidden>
-              No readings match that filter yet.
-            </p>
-          </div>
-          <div class="card personalization-card">
-            <h3>Add your own lesson</h3>
-            <p class="subtle">
-              Save links to videos, diagrams, or quizzes. We'll store your picks
-              on this device and add them to the checklist above.
-            </p>
-            <form id="add-reading-form" class="reading-form" novalidate>
-              <div class="field">
-                <label for="reading-title">Lesson title</label>
-                <input
-                  id="reading-title"
-                  name="title"
-                  type="text"
-                  required
-                  placeholder="MIG troubleshooting for thin stock"
-                />
-              </div>
-              <div class="field">
-                <label for="reading-link">Link</label>
-                <input
-                  id="reading-link"
-                  name="link"
-                  type="url"
-                  required
-                  placeholder="https://example.com/your-resource"
-                />
-                <small>Links open in a new tab so you keep your tracker.</small>
-              </div>
-              <div class="field">
-                <label for="reading-description">What you'll cover</label>
-                <textarea
-                  id="reading-description"
-                  name="description"
-                  rows="3"
-                  placeholder="Short note about the diagrams, safety tips, or quiz you'll study"
-                ></textarea>
-              </div>
-              <div class="field">
-                <label for="reading-category">Topic tag</label>
-                <input
-                  id="reading-category"
-                  name="category"
-                  type="text"
-                  placeholder="e.g. safety, symbols, process"
-                />
-              </div>
-              <p class="form-error" data-form-error hidden role="alert"></p>
-              <button class="primary" type="submit">Add to checklist</button>
-            </form>
-            <div id="custom-reading-summary" hidden>
-              <h4 style="font-size: 0.95rem; font-weight: 600">
-                Your custom lessons
-              </h4>
-              <ul class="custom-reading-list" id="custom-reading-list"></ul>
-              <small class="subtle"
-                >Use the × button beside any custom item to remove it from the
-                tracker.</small
-              >
-            </div>
-            <div class="form-actions">
-              <button
-                class="primary"
-                type="button"
-                data-action="reset-readings"
-              >
-                Reset reading progress
-              </button>
-              <button
-                class="link-button"
-                type="button"
-                data-action="clear-custom-readings"
-              >
-                Remove custom readings
-              </button>
-            </div>
-          </div>
+        <div class="card">
+          <div class="tracker-list" id="practice-list"></div>
         </div>
       </section>
     </main>
@@ -237,17 +146,16 @@
       <form method="dialog" class="note-dialog__form" data-note-dialog-form>
         <h3>Quick note</h3>
         <p class="subtle">
-          Capture a reflection without leaving the page. You'll find it again in
-          the journal.
+          Log what you adjusted, inspected, or want to repeat next session.
         </p>
         <div class="field">
-          <label for="note-dialog-text">Reflection</label>
+          <label for="practice-note-text">Reflection</label>
           <textarea
-            id="note-dialog-text"
+            id="practice-note-text"
             name="note"
             rows="5"
             data-note-dialog-field
-            placeholder="What did you learn or troubleshoot?"
+            placeholder="Travel speed, fit-up fixes, machine settings..."
           ></textarea>
         </div>
         <p class="form-error" data-note-dialog-error hidden role="alert"></p>
