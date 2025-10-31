@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welding Study Hub – Notes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="notes">
+    <header>
+      <div class="wrapper">
+        <div class="top-bar">
+          <a class="title" href="index.html">Welding Study Hub</a>
+          <nav aria-label="Primary navigation">
+            <a href="index.html">Readings</a>
+            <a href="practice.html">Practice</a>
+            <a class="active" href="notes.html">Notes</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrapper">
+      <section>
+        <div class="card progress-summary">
+          <div class="progress-ring" aria-hidden="true">
+            <svg width="140" height="140" viewBox="0 0 120 120">
+              <circle
+                cx="60"
+                cy="60"
+                r="52"
+                fill="none"
+                stroke="rgba(148,163,184,0.2)"
+                stroke-width="8"
+              ></circle>
+              <circle
+                cx="60"
+                cy="60"
+                r="52"
+                fill="none"
+                stroke="var(--accent)"
+                stroke-linecap="round"
+                stroke-width="8"
+                stroke-dasharray="327"
+                stroke-dashoffset="327"
+              ></circle>
+            </svg>
+            <span id="overall-percentage">0%</span>
+          </div>
+          <div>
+            <h1 class="page-heading">Reflect on your welding sessions</h1>
+            <p class="lead">
+              Capture what clicked, what needs work, and questions to review.
+              Every entry is timestamped and saved locally for your reference.
+            </p>
+            <div class="cards three" style="margin-top: 1.5rem">
+              <div class="card" style="padding: 1.1rem 1.3rem">
+                <div class="subtle">Reading complete</div>
+                <div class="flex-between" style="margin-top: 0.6rem">
+                  <strong id="reading-count" style="font-size: 1.8rem"
+                    >0%</strong
+                  >
+                  <div class="progress-bar" style="flex: 1; margin-left: 1rem">
+                    <span id="reading-bar" style="width: 0%"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="card" style="padding: 1.1rem 1.3rem">
+                <div class="subtle">Practice complete</div>
+                <div class="flex-between" style="margin-top: 0.6rem">
+                  <strong id="practice-count" style="font-size: 1.8rem"
+                    >0%</strong
+                  >
+                  <div class="progress-bar" style="flex: 1; margin-left: 1rem">
+                    <span id="practice-bar" style="width: 0%"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="card" style="padding: 1.1rem 1.3rem">
+                <div class="subtle">Daily streak</div>
+                <div style="margin-top: 0.6rem">
+                  <strong id="streak-count" style="font-size: 1.8rem"
+                    >0 days</strong
+                  >
+                  <p class="subtle" style="margin-top: 0.35rem">
+                    We track streaks from practice completions.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-heading">
+          <h2>Notes journal</h2>
+          <p class="subtle">
+            Entries stay on this device and are ordered newest first.
+          </p>
+        </div>
+        <div class="cards two notes-grid">
+          <div class="card notes-card">
+            <h3 style="font-size: 1.1rem; font-weight: 700">New entry</h3>
+            <p class="subtle" style="margin-top: 0.5rem">
+              Use the form to add a reflection after reading or practice.
+            </p>
+            <form id="note-form" class="note-form" novalidate>
+              <div class="field">
+                <label for="note-text">Reflection</label>
+                <textarea
+                  id="note-text"
+                  name="note"
+                  rows="6"
+                  required
+                  placeholder="Record key learnings, machines used, fit-up issues, etc."
+                ></textarea>
+              </div>
+              <p class="form-error" data-note-error hidden role="alert"></p>
+              <div class="actions">
+                <button type="reset" class="secondary">Clear</button>
+                <button type="submit">Save journal entry</button>
+              </div>
+            </form>
+          </div>
+          <div class="card notes-history">
+            <div
+              class="flex-between"
+              style="gap: 1rem; align-items: flex-start"
+            >
+              <div>
+                <h3 style="font-size: 1.1rem; font-weight: 700">
+                  Stored notes
+                </h3>
+                <p class="subtle" style="margin-top: 0.35rem">
+                  Entries are ordered with the most recent first.
+                </p>
+              </div>
+              <button
+                class="link-button"
+                type="button"
+                data-action="clear-notes"
+              >
+                Clear all
+              </button>
+            </div>
+            <p class="subtle" data-empty-notes style="margin-top: 1rem">
+              No notes saved yet. Add your first reflection to build your log.
+            </p>
+            <ul class="notes-list" id="notes-list"></ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      Built for the self-paced welder—stay consistent and keep the arc time up.
+    </footer>
+
+    <template id="tracker-item-template">
+      <div class="tracker-item" data-state="pending">
+        <input class="toggle" type="checkbox" />
+        <div class="tracker-content">
+          <h3></h3>
+          <p></p>
+          <div class="tags" hidden></div>
+        </div>
+        <span class="badge"></span>
+        <button
+          class="remove-item"
+          type="button"
+          hidden
+          aria-label="Remove custom item"
+        >
+          ×
+        </button>
+      </div>
+    </template>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
