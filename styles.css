@@ -557,6 +557,41 @@ p.lead {
   white-space: pre-wrap;
 }
 
+.note-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.note-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: rgba(148, 163, 184, 0.14);
+  color: var(--text-muted);
+}
+
+.note-chip--source {
+  background: rgba(56, 189, 248, 0.18);
+  color: var(--accent);
+}
+
+.note-chip--context {
+  background: rgba(45, 212, 191, 0.18);
+  color: #5eead4;
+}
+
+.note-chip--tag {
+  background: rgba(94, 234, 212, 0.12);
+  color: #99f6e4;
+}
+
 .empty-message {
   font-size: 0.9rem;
   color: var(--text-muted);
@@ -680,6 +715,51 @@ nav a.active {
   color: var(--text);
   padding: 0.65rem 0.85rem;
   font-size: 0.9rem;
+}
+
+.data-backup {
+  display: grid;
+  gap: 1rem;
+}
+
+.backup-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.file-upload {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.15rem;
+  border-radius: 14px;
+  border: 1px dashed rgba(148, 163, 184, 0.4);
+  color: var(--text-muted);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.file-upload:hover,
+.file-upload:focus-within {
+  color: var(--text);
+  border-color: var(--accent-strong);
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.file-upload span {
+  pointer-events: none;
+}
+
+.status-message {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fca5a5;
+}
+
+.status-message[data-variant="success"] {
+  color: #4ade80;
 }
 
 .personalization-card {

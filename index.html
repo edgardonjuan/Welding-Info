@@ -89,8 +89,15 @@
                     >0 days</strong
                   >
                   <p class="subtle" style="margin-top: 0.35rem">
-                    We only update streaks when you log practice completions.
+                    Reading wins, practice reps, or saved notes all count toward
+                    your streak.
                   </p>
+                  <p
+                    class="subtle"
+                    style="margin-top: 0.35rem"
+                    data-streak-types
+                    hidden
+                  ></p>
                 </div>
               </div>
             </div>
@@ -231,6 +238,7 @@
       class="note-fab"
       type="button"
       data-open-note
+      data-note-origin="reading"
       aria-label="Create a quick note"
     >
       Quick note
@@ -252,6 +260,20 @@
             data-note-dialog-field
             placeholder="What did you learn or troubleshoot?"
           ></textarea>
+        </div>
+        <div class="field">
+          <label for="note-dialog-source">Tag this note</label>
+          <select id="note-dialog-source" data-note-dialog-source>
+            <option value="general">General reflection</option>
+            <option value="reading">Reading insight</option>
+            <option value="practice">Practice session</option>
+          </select>
+        </div>
+        <div class="field" data-note-dialog-related-wrapper hidden>
+          <label for="note-dialog-related">Linked item (optional)</label>
+          <select id="note-dialog-related" data-note-dialog-related>
+            <option value="">No linked item</option>
+          </select>
         </div>
         <p class="form-error" data-note-dialog-error hidden role="alert"></p>
         <div class="dialog-actions">

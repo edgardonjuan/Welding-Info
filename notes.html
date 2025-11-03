@@ -89,8 +89,15 @@
                     >0 days</strong
                   >
                   <p class="subtle" style="margin-top: 0.35rem">
-                    We track streaks from practice completions.
+                    Reading wins, practice reps, or saved notes all count toward
+                    your streak.
                   </p>
+                  <p
+                    class="subtle"
+                    style="margin-top: 0.35rem"
+                    data-streak-types
+                    hidden
+                  ></p>
                 </div>
               </div>
             </div>
@@ -121,6 +128,20 @@
                   required
                   placeholder="Record key learnings, machines used, fit-up issues, etc."
                 ></textarea>
+              </div>
+              <div class="field">
+                <label for="note-context">Tag this entry</label>
+                <select id="note-context" data-note-source>
+                  <option value="general">General reflection</option>
+                  <option value="reading">Reading insight</option>
+                  <option value="practice">Practice session</option>
+                </select>
+              </div>
+              <div class="field" data-note-related-wrapper hidden>
+                <label for="note-related">Linked item (optional)</label>
+                <select id="note-related" data-note-related>
+                  <option value="">No linked item</option>
+                </select>
               </div>
               <p class="form-error" data-note-error hidden role="alert"></p>
               <div class="actions">
@@ -155,6 +176,42 @@
             </p>
             <ul class="notes-list" id="notes-list"></ul>
           </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-heading">
+          <h2>Backup &amp; restore your progress</h2>
+          <p class="subtle">
+            Download a JSON copy of your readings, practice, notes, and streak or
+            restore it on another device.
+          </p>
+        </div>
+        <div class="card data-backup">
+          <div class="backup-actions">
+            <button class="primary" type="button" data-action="export-data">
+              Download backup
+            </button>
+            <label class="file-upload">
+              <input
+                type="file"
+                accept="application/json"
+                data-backup-input
+                hidden
+              />
+              <span>Restore from backup</span>
+            </label>
+          </div>
+          <p class="subtle" style="margin-top: 0.75rem">
+            Restoring replaces your current tracker data with the file you
+            choose.
+          </p>
+          <p
+            class="status-message"
+            data-backup-message
+            hidden
+            role="status"
+          ></p>
         </div>
       </section>
     </main>
